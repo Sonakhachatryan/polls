@@ -1,6 +1,9 @@
 <?php
 
 
-Route::get('home/home','HomeController@index');
-Route::get('home/{id}/{name}','HomeController@index');
-Route::get('index','HomeController@index');
+Route::get('/','EmployeeController@index');
+Route::get('delete','EmployeeController@delete');
+Route::get('delete','EmployeeController@delete');
+Route::get('update','EmployeeController@update');
+
+

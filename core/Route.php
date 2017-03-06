@@ -8,21 +8,9 @@ class Route{
         $action = $a[1];
 
         $obj = new $controller;
-        call_user_func_array(array($obj, $action), $params);
+        $obj->$action();
         exit();
     }
-    
-//    public function getParams($data){
-//        $params = '';
-//        foreach ($data as $key=>$value){
-//            if($key == 0)
-//                $params.=$value;
-//            else
-//                $params=$params.', '.$value;
-//        }
-//
-//        return $params;
-//    }
 
     public static function get($url, $action){
 
@@ -53,41 +41,13 @@ class Route{
             $formatted_url = '/'.$url;
         }
 
-        $call = false;
         $params = array();
-        if(strpos($formatted_url, '{') && strpos($formatted_url, '}')){
+        if(strpos($current_url, '?') ){
 
-            $arr_url = explode('/', $formatted_url);
-            $arr_current = explode('/', $current_url);
-
-            if(count($arr_current) == count($arr_url)){
-                $i=0;
-                foreach ($arr_url as $key => $value){
-                    if($value == $arr_current[$key]){
-                        continue;
-                    }
-                    else{
-                        $count = strlen($value);
-                        if($value[0] == '{' && $value[$count-1] == '}'){
-                            $params[$i] = $arr_current[$key];
-                            $i++;
-                            $call = true;
-                        }
-                        else{
-                            $call = false;
-                            break;
-                        }
-                    }
-                }
-            }
-        }
-        else {
-            if ($current_url == $formatted_url) {
-                $call = true;
-            }
+            $current_url  = explode('?', $current_url)[0];
         }
 
-        if($call) {
+        if ($current_url == $formatted_url) {
             self::call($action, $params);
         }
         else {
