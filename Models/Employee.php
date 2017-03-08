@@ -11,7 +11,16 @@ class Employee extends DB
 
     public function all()
     {
-        $result = mysqli_query($this->con, "SELECT * FROM employees");
+        $result = mysqli_query($this->con, "SELECT
+                                              em.*,
+                                              adr.address as address,
+                                              ph.number as phone
+                                            FROM employees  em
+                                            LEFT JOIN addresses adr
+                                              ON em.id=adr.employee_id
+                                            LEFT JOIN phones ph
+                                              ON em.id=ph.employee_id
+                                            ORDER BY em.id");
 
         $data = [];
 
@@ -21,6 +30,16 @@ class Employee extends DB
             }
         }
 
+        foreach ($data as $k => $value) {
+            if($k != 0)
+                if($value['id'] == $data[$k-1]['id']){
+                    
+                }
+        }
+
+
+        echo '<pre>';
+        print_r($data);
         return $data;
     }
 
