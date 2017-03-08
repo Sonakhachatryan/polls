@@ -15,8 +15,10 @@ class Employee extends DB
 
         $data = [];
 
-        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            array_push($data, $row);
+        if($result) {
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                array_push($data, $row);
+            }
         }
 
         return $data;
