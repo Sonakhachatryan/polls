@@ -14,7 +14,9 @@ class Employee extends DB
         $result = mysqli_query($this->con, "SELECT
                                               em.*,
                                               adr.address as address,
-                                              ph.number as phone
+                                              adr.id as address_id,
+                                              ph.number as phone,
+                                              ph.id as phone_id
                                             FROM employees  em
                                             LEFT JOIN addresses adr
                                               ON em.id=adr.employee_id
@@ -29,18 +31,56 @@ class Employee extends DB
                 array_push($data, $row);
             }
         }
+     
 
-        foreach ($data as $k => $value) {
-            if($k != 0)
-                if($value['id'] == $data[$k-1]['id']){
-                    
-                }
+        $relations = ['phone', 'address'];
+        $r = [];
+        foreach ($relations as $relation) {
+            $r[$relation.'_key'] = [];
+            $r[$relation.'_key'] = [];
+        }
+        $newData = [];
+        $newDataKeys = [];
+        $newKey = 0;
+        foreach($data as $key => $value){
+
+            if(!in_array($value["id"], $newDataKeys)){
+                ++$newKey;
+                $newData[$newKey]["id"] = $value["id"];
+                $newData[$newKey]["firstName"] = $value["firstName"];
+                $newData[$newKey]["lastName"] = $value["lastName"];
+                $newData[$newKey]["age"] = $value["age"];
+                $newData[$newKey]["city"] = $value["city"];
+                $newData[$newKey]["email"] = $value["email"];
+                $newData[$newKey]["country"] = $value["country"];
+                $newData[$newKey]["bankAccountNumber"] = $value["bankAccountNumber"];
+                $newData[$newKey]["creditCardNumber"] = $value["creditCardNumber"];
+            }
+
+            foreach ($relations as $relation) {
+                if(! in_array( $value[$relation.'_id'], $r[$relation.'_key']))
+                    $newData[$newKey][$relation][$key] = $value[$relation];
+
+                array_push($r[$relation.'_key'], $value[$relation.'_id']);
+            }
+
+            array_push($newDataKeys, $value["id"]);
+
         }
 
+        return $newData;
 
-        echo '<pre>';
-        print_r($data);
-        return $data;
+    }
+
+    function exist($data, $id){
+
+        foreach ($data as $k => $value){
+            if($value['id'] == $id){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function delete($ids)

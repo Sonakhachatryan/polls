@@ -8,13 +8,13 @@ class EmployeeController
         $employee = new Employee();
         $employees = $employee->all();
 
-        view('index.php', compact('employees'));
+        view('index', compact('employees'));
 
     }
 
     public function delete()
     {
-        $ids = json_decode($_GET['ids']);
+        $ids = $_GET['ids'];
 
         $employee = new Employee();
         $employee->delete($ids);

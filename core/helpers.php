@@ -1,11 +1,11 @@
 <?php
 
-function view($file_path, $params){
+function view($file, $params){
 
     foreach($params as $key => $param){
         $$key = $param;
     }
 
-    include('views/'.$file_path);
+    include('views/'.$file.'.php');
 
 }
