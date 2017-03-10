@@ -10,6 +10,8 @@
     <!-- Optional theme -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 
+    <link rel="stylesheet" href="/public/css/style.css">
+
 <body>
 <div class="container">
     <table class="table table-hover employees">
@@ -65,8 +67,8 @@
                     ?>
                 </td>
                 <td>
-                    <button data-toggle="modal" data-target="#editGym" data-id="<?php echo $employee['id']; ?>" class="btn-white btn btn-xs edit">Edit</button>
-                    <button data-id="<?php echo $employee['id']; ?>" class="btn-white btn btn-xs delete">Delete</button>
+                    <button data-toggle="modal" data-target="#editModal" data-id="<?php echo $employee['id']; ?>" class="btn-white btn btn-xs edit">Edit</button>
+                    <button  data-id="<?php echo $employee['id']; ?>" class="btn-white btn btn-xs delete">Delete</button>
                 </td>
             </tr>
             <?php
@@ -76,14 +78,14 @@
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="11"><button data-toggle="modal" data-target="#deleteModal" class=" btn btn-danger delete_all">Delete</button> </td>
+            <td colspan="11"><button data-toggle="modal" data-target="#deleteModal" class="disabled btn btn-danger delete_all">Delete</button> </td>
         </tr>
         </tfoot>
     </table>
 
 </div>
 
-<!-- Modal -->
+<!-- Modal Delete All-->
 <div class="modal  fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog modal-sm" role="document">
         <div class="modal-content">
@@ -98,6 +100,70 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-danger delete_all">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Edit -->
+<div class="modal  fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">Edit</h4>
+            </div>
+            <div class="modal-body">
+                <form>
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input type="text" name="firstname" class="form-control" placeholder="First Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input type="text" name="lastname" class="form-control" placeholder="Last Name">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" name="age" class="form-control" placeholder="Age">
+                    </div>
+                    <div class="form-group">
+                        <label>City</label>
+                        <input type="text" name="city" class="form-control" placeholder="City">
+                    </div>
+                    <div class="form-group">
+                        <label>Country</label>
+                        <input type="text" name="country" class="form-control" placeholder="Country">
+                    </div>
+                    <div class="form-group">
+                        <label>Bank Account Number</label>
+                        <input type="text" name="bank_account_number" class="form-control" placeholder="Bank Account Number">
+                    </div>
+                    <div class="form-group">
+                        <label>Credit Card Number</label>
+                        <input type="text" name="credit_card_number" class="form-control" placeholder="Credit Card Number">
+                    </div>
+                    <div class="form-group phoneNumbers">
+                        <label>Phone Numbers</label>
+                        <div class="input-group" id="phone1">
+                            <input type="text" name="phone[]" class="form-control" placeholder="Phone Number">
+                            <div class="add-more input-group-addon">+</div>
+                        </div>
+                    </div>
+                    <div class="form-group addresses">
+                        <label>Addresses</label>
+                        <div class="input-group" id="address1">
+                            <input type="text" name="address[]" class="form-control" placeholder="Address">
+                            <div class="add-more input-group-addon">+</div>
+                        </div>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-success">Save</button>
             </div>
         </div>
     </div>

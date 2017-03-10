@@ -31,7 +31,6 @@ class Employee extends DB
                 array_push($data, $row);
             }
         }
-     
 
         $relations = ['phone', 'address'];
         $r = [];
@@ -85,10 +84,11 @@ class Employee extends DB
 
     public function delete($ids)
     {
-        foreach($ids as $id){
-            mysqli_query($this->con, "DELETE FROM employees WHERE id=$id");
+        $implode_ids = implode(',', $ids);
 
-        }
+        mysqli_query($this->con, "DELETE FROM employees WHERE id IN ($implode_ids)");
+
+
     }
 
     public function update($id, $data)
