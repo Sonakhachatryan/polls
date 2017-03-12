@@ -4,8 +4,6 @@
 class Employee extends DB
 {
 
-    protected $id;
-
     public function __construct()
     {
         parent::__construct();
@@ -15,44 +13,82 @@ class Employee extends DB
     {
         $result = mysqli_query($this->con, "SELECT
                                               em.*,
-                                              GROUP_CONCAT(em.id) as phones,
-                                              ph.number as phone
+                                              adr.address as address,
+                                              adr.id as address_id,
+                                              ph.number as phone,
+                                              ph.id as phone_id
                                             FROM employees  em
-
+                                            LEFT JOIN addresses adr
+                                              ON em.id=adr.employee_id
                                             LEFT JOIN phones ph
                                               ON em.id=ph.employee_id
                                             ORDER BY em.id");
 
         $data = [];
 
-        while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-            array_push($data, $row);
+        if($result) {
+            while ($row = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+                array_push($data, $row);
+            }
         }
 
-//        foreach ($data as $k => $value) {
-//            $this->id  =$k;
-//            if($k != 0) {
-//                if ($value['id'] == $data[$k - 1]['id']) {
-//
-//                    $data[$k]['phones'] = [];
-//                    array_push($data[$this->id]['phones'], $value['phone']);
-//                }
-//            }
-//
-//        }
+        $relations = ['phone', 'address'];
+        $r = [];
+        foreach ($relations as $relation) {
+            $r[$relation.'_key'] = [];
+            $r[$relation.'_key'] = [];
+        }
+        $newData = [];
+        $newDataKeys = [];
+        $newKey = 0;
+        foreach($data as $key => $value){
 
+            if(!in_array($value["id"], $newDataKeys)){
+                ++$newKey;
+                $newData[$newKey]["id"] = $value["id"];
+                $newData[$newKey]["firstName"] = $value["firstName"];
+                $newData[$newKey]["lastName"] = $value["lastName"];
+                $newData[$newKey]["age"] = $value["age"];
+                $newData[$newKey]["city"] = $value["city"];
+                $newData[$newKey]["email"] = $value["email"];
+                $newData[$newKey]["country"] = $value["country"];
+                $newData[$newKey]["bankAccountNumber"] = $value["bankAccountNumber"];
+                $newData[$newKey]["creditCardNumber"] = $value["creditCardNumber"];
+            }
 
-        echo '<pre>';
-        print_r($data);
-        return $data;
+            foreach ($relations as $relation) {
+                if(! in_array( $value[$relation.'_id'], $r[$relation.'_key']))
+                    $newData[$newKey][$relation][$key] = $value[$relation];
+
+                array_push($r[$relation.'_key'], $value[$relation.'_id']);
+            }
+
+            array_push($newDataKeys, $value["id"]);
+
+        }
+
+        return $newData;
+
+    }
+
+    function exist($data, $id){
+
+        foreach ($data as $k => $value){
+            if($value['id'] == $id){
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public function delete($ids)
     {
-        foreach($ids as $id){
-            mysqli_query($this->con, "DELETE FROM employees WHERE id=$id");
+        $implode_ids = implode(',', $ids);
 
-        }
+        mysqli_query($this->con, "DELETE FROM employees WHERE id IN ($implode_ids)");
+
+
     }
 
     public function update($id, $data)
