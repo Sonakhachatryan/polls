@@ -4,6 +4,8 @@
 class Employee extends DB
 {
 
+    protected $id;
+
     public function __construct()
     {
         parent::__construct();
@@ -13,11 +15,10 @@ class Employee extends DB
     {
         $result = mysqli_query($this->con, "SELECT
                                               em.*,
-                                              adr.address as address,
+                                              GROUP_CONCAT(em.id) as phones,
                                               ph.number as phone
                                             FROM employees  em
-                                            LEFT JOIN addresses adr
-                                              ON em.id=adr.employee_id
+
                                             LEFT JOIN phones ph
                                               ON em.id=ph.employee_id
                                             ORDER BY em.id");
@@ -28,12 +29,17 @@ class Employee extends DB
             array_push($data, $row);
         }
 
-        foreach ($data as $k => $value) {
-            if($k != 0)
-                if($value['id'] == $data[$k-1]['id']){
-                    
-                }
-        }
+//        foreach ($data as $k => $value) {
+//            $this->id  =$k;
+//            if($k != 0) {
+//                if ($value['id'] == $data[$k - 1]['id']) {
+//
+//                    $data[$k]['phones'] = [];
+//                    array_push($data[$this->id]['phones'], $value['phone']);
+//                }
+//            }
+//
+//        }
 
 
         echo '<pre>';
