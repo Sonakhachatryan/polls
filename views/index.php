@@ -115,48 +115,48 @@
             </div>
             <div class="modal-body">
                 <form>
-                    <div class="form-group">
-                        <label>First Name</label>
-                        <input type="text" name="firstname" class="form-control" placeholder="First Name">
-                    </div>
-                    <div class="form-group">
-                        <label>Last Name</label>
-                        <input type="text" name="lastname" class="form-control" placeholder="Last Name">
-                    </div>
-                    <div class="form-group">
-                        <label>Age</label>
-                        <input type="number" name="age" class="form-control" placeholder="Age">
-                    </div>
-                    <div class="form-group">
-                        <label>City</label>
-                        <input type="text" name="city" class="form-control" placeholder="City">
-                    </div>
-                    <div class="form-group">
-                        <label>Country</label>
-                        <input type="text" name="country" class="form-control" placeholder="Country">
-                    </div>
-                    <div class="form-group">
-                        <label>Bank Account Number</label>
-                        <input type="text" name="bank_account_number" class="form-control" placeholder="Bank Account Number">
-                    </div>
-                    <div class="form-group">
-                        <label>Credit Card Number</label>
-                        <input type="text" name="credit_card_number" class="form-control" placeholder="Credit Card Number">
-                    </div>
-                    <div class="form-group phoneNumbers">
-                        <label>Phone Numbers</label>
-                        <div class="input-group" id="phone1">
-                            <input type="text" name="phone[]" class="form-control" placeholder="Phone Number">
-                            <div class="add-more input-group-addon">+</div>
-                        </div>
-                    </div>
-                    <div class="form-group addresses">
-                        <label>Addresses</label>
-                        <div class="input-group" id="address1">
-                            <input type="text" name="address[]" class="form-control" placeholder="Address">
-                            <div class="add-more input-group-addon">+</div>
-                        </div>
-                    </div>
+<!--                    <div class="form-group">-->
+<!--                        <label>First Name</label>-->
+<!--                        <input type="text" name="firstname" class="form-control" placeholder="First Name">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>Last Name</label>-->
+<!--                        <input type="text" name="lastname" class="form-control" placeholder="Last Name">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>Age</label>-->
+<!--                        <input type="number" name="age" class="form-control" placeholder="Age">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>City</label>-->
+<!--                        <input type="text" name="city" class="form-control" placeholder="City">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>Country</label>-->
+<!--                        <input type="text" name="country" class="form-control" placeholder="Country">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>Bank Account Number</label>-->
+<!--                        <input type="text" name="bank_account_number" class="form-control" placeholder="Bank Account Number">-->
+<!--                    </div>-->
+<!--                    <div class="form-group">-->
+<!--                        <label>Credit Card Number</label>-->
+<!--                        <input type="text" name="credit_card_number" class="form-control" placeholder="Credit Card Number">-->
+<!--                    </div>-->
+<!--                    <div class="form-group phoneNumbers">-->
+<!--                        <label>Phone Numbers</label>-->
+<!--                        <div class="input-group" id="phone1">-->
+<!--                            <input type="text" name="phone[]" class="form-control" placeholder="Phone Number">-->
+<!--                            <div class="add-more input-group-addon">+</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="form-group addresses">-->
+<!--                        <label>Addresses</label>-->
+<!--                        <div class="input-group" id="address1">-->
+<!--                            <input type="text" name="address[]" class="form-control" placeholder="Address">-->
+<!--                            <div class="add-more input-group-addon">+</div>-->
+<!--                        </div>-->
+<!--                    </div>-->
 
                 </form>
 

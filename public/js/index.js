@@ -19,7 +19,7 @@
         $("#phone" + phone_next).find('input').attr('data-source',$(addto).attr('data-source'));
         $("#count").val(phone_next);
 
-        $('.remove-me').click(function(e){
+        $(document).on('click', '.remove-me', function(e){
             e.preventDefault();
             var fieldNum = this.id.charAt(this.id.length-1);
             var fieldID = "#phone" + fieldNum;
@@ -130,4 +130,19 @@ $('#deleteModal').find('.delete_all').on('click', function(){
     })
 
 });
+
+$(document).find('.edit').on('click', function(){
+    var employee_id = $(this).data('id');
+
+    $.ajax({
+        url: '/edit',
+        type: 'get',
+        data: {
+            id: employee_id
+        },
+        success: function(data){
+            $('#editModal').find('form').append(data);
+        }
+    })
+})
 

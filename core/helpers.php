@@ -1,6 +1,6 @@
 <?php
 
-function view($file, $params){
+function view($file, $params = null){
 
     foreach($params as $key => $param){
         $$key = $param;

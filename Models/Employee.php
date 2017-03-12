@@ -24,6 +24,13 @@ class Employee extends DB
                                               ON em.id=ph.employee_id
                                             ORDER BY em.id");
 
+
+        return $this->format_data($result);
+
+
+    }
+
+    public function format_data($result){
         $data = [];
 
         if($result) {
@@ -68,7 +75,6 @@ class Employee extends DB
         }
 
         return $newData;
-
     }
 
     function exist($data, $id){
@@ -109,6 +115,27 @@ class Employee extends DB
         if (!mysqli_query($this->con, $sql)) {
             print_r(mysqli_error_list($this->con));
         }
+
+    }
+
+    public function find($id){
+        $sql = "SELECT em.*,
+                      adr.address as address,
+                      adr.id as address_id,
+                      ph.number as phone,
+                      ph.id as phone_id
+                    FROM employees  em
+                    LEFT JOIN addresses adr
+                      ON em.id=adr.employee_id
+                    LEFT JOIN phones ph
+                      ON em.id=ph.employee_id
+                    WHERE em.id=$id
+                    ORDER BY em.id";
+
+        $result = mysqli_query($this->con, $sql);
+
+        $data = $this->format_data($result);
+        return $data[1];
 
     }
 }
