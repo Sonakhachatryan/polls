@@ -1,12 +1,15 @@
 <?php
-
+namespace Core;
+/**
+ * Class Route
+ * @package Core
+ */
 class Route{
 
     private static function call($action, $params = null){
         $a = explode('@', $action);
-        $controller = $a[0];
+        $controller = 'Controllers\\' . $a[0];
         $action = $a[1];
-
         $obj = new $controller;
         $obj->$action();
         exit();
@@ -14,6 +17,9 @@ class Route{
 
     public static function get($url, $action){
 
+        if(isset($_GET['token']) && $_GET['token'] != $_SESSION['old_token'] ) {
+            throw new \Exception('Token missmutch');
+        }
         if($_SERVER['REQUEST_METHOD'] != 'GET')
             return;
 
@@ -23,6 +29,11 @@ class Route{
     }
 
     public static function post($url, $action){
+
+        if($_POST['token'] != $_SESSION['old_token'] ) {
+            throw new \Exception('Token missmutch');
+        }
+
         if($_SERVER['REQUEST_METHOD'] != 'POST')
             return;
 

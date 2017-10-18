@@ -1,15 +1,5 @@
-#editModal .modal-body{
-    padding-right: 40px;
-    padding-left: 40px;
-}
-
-#editModal .phoneNumbers .input-group{
-    margin-bottom: 10px;
-}
-#editModal .addresses .input-group{
-    margin-bottom: 10px;
-}
-
-#editModal .input-group-addon{
-    cursor: pointer;
+.login-content{
+    width: 600px;
+    margin: 0 auto;
+    padding-top: 50px;
 }

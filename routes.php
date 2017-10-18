@@ -1,9 +1,11 @@
 <?php
+use Core\Route;
+
+Route::get('/','HomeController@index');
+Route::get('login','AuthController@loginView');
+Route::get('register','AuthController@registerView');
+Route::post('register','AuthController@register');
 
 
-Route::get('/','EmployeeController@index');
-Route::get('delete','EmployeeController@delete');
-Route::get('edit','EmployeeController@edit');
 
-
-
+throw new Exception('Route not found.',404);

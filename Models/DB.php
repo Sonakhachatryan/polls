@@ -1,19 +1,55 @@
 <?php
+namespace Models;
+
+use PDO;
+use Core\Config;
+
+/**
+ * Class DB
+ * @package Models
+ *
+ * @property string $dsn
+ * @property string $user
+ * @property string $password
+ * @property PDO $dbh
+ * @property string $tableName
+ */
 
 class DB
 {
-    protected $con;
+    private $dsn;
+    private $user;
+    private $password;
+    private $dbh;
 
-    public function __construct(){
-        $con = mysqli_connect("localhost", "root", "", "employee_cms");
+    private $tableName;
 
-        // Check connection
-        if (mysqli_connect_errno())
-        {
-            echo "Failed to connect to MySQL: " . mysqli_connect_error();
+    public function __construct()
+    {
+        $db = Config::get('db');
+        $this->dsn = "mysql:dbname=" . $db['dbName'] . ";host=" . $db['host'];
+        $this->user = $db['user'];
+        $this->password = $db['password'];
+        try {
+            $this->dbh = new PDO($this->dsn, $this->user, $this->password);
+        } catch (PDOException $e) {
+            echo 'Failed to connect: ' . $e->getMessage();
         }
+    }
 
-        $this->con = $con;
+    /**
+     * Get all the records from table
+     *
+     * @return array
+     */
+    public function all()
+    {
+        $sql = "SELECT * FROM $this->tableName";
+        $sth = $this->dbh->prepare($sql);
+        $sth->execute();
+        $res = $sth->fetchAll();
+
+        return $res;
     }
 
 }
