@@ -6,20 +6,25 @@ namespace Core;
  */
 class Route{
 
-    private static function call($action, $params = null){
+    private static function call($action, $params = []){
         $a = explode('@', $action);
         $controller = 'Controllers\\' . $a[0];
         $action = $a[1];
-        $obj = new $controller;
-        $obj->$action();
+        if(count($params)) {
+            $obj = new $controller;
+            call_user_func_array([$obj, $action], $params);
+        }else{
+            $obj = new $controller;
+            $obj->$action();
+        }
         exit();
     }
 
     public static function get($url, $action){
-
-        if(isset($_GET['token']) && $_GET['token'] != $_SESSION['old_token'] ) {
-            throw new \Exception('Token missmutch');
-        }
+//
+//        if(isset($_GET['token']) && $_GET['token'] != $_SESSION['old_token'] ) {
+//            throw new \Exception('Token missmutch');
+//        }
         if($_SERVER['REQUEST_METHOD'] != 'GET')
             return;
 
@@ -29,10 +34,10 @@ class Route{
     }
 
     public static function post($url, $action){
-
-        if($_POST['token'] != $_SESSION['old_token'] ) {
-            throw new \Exception('Token missmutch');
-        }
+//
+//        if($_POST['token'] != $_SESSION['old_token'] ) {
+//            throw new \Exception('Token missmutch');
+//        }
 
         if($_SERVER['REQUEST_METHOD'] != 'POST')
             return;
@@ -52,10 +57,14 @@ class Route{
             $formatted_url = '/'.$url;
         }
 
-        $params = array();
+        $params = [];
         if(strpos($current_url, '?') ){
-
-            $current_url  = explode('?', $current_url)[0];
+            $urlParts = explode('?', $current_url);
+            $current_url  = $urlParts[0];
+            $paramStr = $urlParts[1];
+            foreach( explode('&', $paramStr) as $param){
+                $params[explode('=',$param)[0]] = explode('=',$param)[1];
+            }
         }
 
         if ($current_url == $formatted_url) {

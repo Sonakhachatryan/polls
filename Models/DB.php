@@ -20,7 +20,7 @@ class DB
     private $dsn;
     private $user;
     private $password;
-    private $dbh;
+    protected $dbh;
 
     private $tableName;
 
@@ -51,5 +51,4 @@ class DB
 
         return $res;
     }
-
 }

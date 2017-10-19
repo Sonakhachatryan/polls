@@ -10,7 +10,7 @@
 
     }
 
-    function url($url)
+    function url($url = '')
     {
         $base = Core\Config::get('baseUrl');
 
@@ -33,7 +33,7 @@
         return header('Location:' . url($url));
     }
 
-    function generate_csrf_token()
+    function generate_token()
     {
         $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
         $randstring = '';

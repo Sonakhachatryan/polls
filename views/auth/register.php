@@ -10,25 +10,25 @@
             <div class="panel-heading">Register</div>
             <div class="panel-body">
                 <form method="post" action="<?= url('register') ?>">
-                    <div class="form-group">
+                    <div class="form-group <?= isset($errors['name']) ? 'has-error' : '' ?> ">
                         <label for="name">Name</label>
-                        <input  type="name" class="form-control" id="name" placeholder="Enter namel">
-                        <?= isset($error['name']) ? '<small class="form-text text-muted"> ' . $error['name'] . '</small>' : '' ?>
+                        <input  name="name" type="name" class="form-control" id="name" placeholder="Enter name" value="<?= isset($data['name']) ? $data['name'] : '' ?>">
+                        <?= isset($errors['name']) ? '<small class="form-text text-muted"> ' . $errors['name'] . '</small>' : '' ?>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group <?= isset($errors['email']) ? 'has-error' : '' ?> ">
                         <label for="email">Email</label>
-                        <input name="email" type="email" class="form-control" id="email" placeholder="Enter email">
-                        <?= isset($error['email']) ? '<small class="form-text text-muted"> ' . $error['email'] . '</small>' : '' ?>
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="<?= isset($data['email']) ? $data['email'] : '' ?>">
+                        <?= isset($errors['email']) ? '<small class="form-text text-muted"> ' . $errors['email'] . '</small>' : '' ?>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group <?= isset($errors['password']) ? 'has-error' : '' ?>">
                         <label for="password">Password</label>
                         <input name="password" type="password" class="form-control" id="password" placeholder="Password">
-                        <?= isset($error['password']) ? '<small class="form-text text-muted"> ' . $error['password'] . '</small>' : '' ?>
+                        <?= isset($errors['password']) ? '<small class="form-text text-muted"> ' . $errors['password'] . '</small>' : '' ?>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group <?= isset($errors['password_confirmation']) ? 'has-error' : '' ?>">
                         <label for="password_confirmation">Confirm Password</label>
                         <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" placeholder="Confirm Password">
-                        <?= isset($error['password_confirmation']) ? '<small class="form-text text-muted"> ' . $error['password_confirmation'] . '</small>' : '' ?>
+                        <?= isset($errors['password_confirmation']) ? '<small class="form-text text-muted"> ' . $errors['password_confirmation'] . '</small>' : '' ?>
                     </div>
                     <input type="hidden" name="token" value="<?= csrf_token() ?>">
                     <button type="submit" class="btn btn-primary">Register</button>

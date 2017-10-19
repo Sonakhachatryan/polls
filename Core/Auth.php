@@ -6,14 +6,9 @@ namespace Core;
  * Class Auth
  * @package Core
  *
- * @property array $users
  */
 class Auth
 {
-    /**
-     * @var array
-     */
-    protected static $users = [];
 
     /**
      * @param $user
@@ -22,8 +17,6 @@ class Auth
     public static function login($user, $guard = 'user')
     {
         $_SESSION[$guard] = $user;
-        self::$users[$guard] = $user;
-
     }
 
     /**
@@ -34,7 +27,7 @@ class Auth
      */
     public static function user($guard = 'user')
     {
-        return self::$users[$guard];
+        return $_SESSION[$guard];
     }
 
     /**
@@ -44,8 +37,7 @@ class Auth
      */
     public static function logout($guard = 'user')
     {
-        $_SESSION[$guard] = NULL;
-        unset(self::$users[$guard]);
+       unset($_SESSION[$guard]);
     }
 
     /**
@@ -55,7 +47,7 @@ class Auth
      * @return bool
      */
     public static function check($guard){
-        return isset(self::$users[$guard]) && self::$users[$guard];
+        return isset($_SESSION[$guard]) && $_SESSION[$guard];
     }
 }
 

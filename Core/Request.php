@@ -25,8 +25,16 @@ class Request
         }
 
         foreach ($_POST as $key => $item) {
-            self::$data[$key] = htmlspecialchars($item);
+            if(is_array($item)){
+                foreach($item as $k => $v){
+                    self::$data[$key][$k] = htmlspecialchars($v);
+                }
+            }else {
+                self::$data[$key] = htmlspecialchars($item);
+            }
         }
+
+        $_SESSION['request_data'] = self::$data;
 
     }
 

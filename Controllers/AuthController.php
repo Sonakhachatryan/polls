@@ -22,7 +22,7 @@ class AuthController
             return view('auth/login');
         }
 
-        return redirect('/dashboard');
+        return redirect('dashboard');
     }
 
     /**
@@ -34,7 +34,7 @@ class AuthController
             return view('auth/register');
         }
 
-        return redirect('/dashboard');
+        return redirect('dashboard');
     }
 
     /**
@@ -42,11 +42,73 @@ class AuthController
      */
     public function register()
     {
-        Request::set();
-        $request = Request::get();
+        if (!Auth::check('user')) {
+            Request::set();
+            $request = Request::get();
 
-        //validate request params
-        $this->validateRegisterInput($request);
+            //validate request params
+            $errors = $this->validateRegisterInput($request);
+            if (count($errors)) {
+                return view('auth/register', ['errors' => $errors,'data' => $request]);
+            }
+
+            $userModel = new User();
+            if($userModel->createUser($request)){
+                $this->generateAndDeliverEmail($request['email']);
+                return view('auth/login', ['deliverd' => true]);
+            }
+        }
+
+        return redirect('dashboard');
+    }
+
+    /**
+     * logout user
+     */
+    public function logout()
+    {
+        if (Auth::check('user')) {
+           Auth::logout();
+        }
+
+        return redirect('login');
+    }
+
+    /**
+     * login user
+     */
+    public function login()
+    {
+        if (!Auth::check('user')) {
+            Request::set();
+            $request = Request::get();
+
+            //validate request params
+            $errors = $this->validateLoginInput($request);
+            if(!count($errors)) {
+                $userModel = new User();
+                $user = $userModel->getUserByEmail($request['email']);
+
+                if (!$user) {
+                    $errors['email'] = "This email does't registererd with us.";
+                }elseif($user['password'] != md5($request['password'])) {
+                    $errors['password'] = "Wrong password.";
+                }elseif ($user['status'] != 1){
+                    $errors['other'] = "Your account is not activated yet.Please check your email and follow the link.";
+                }
+
+            }
+
+            if (count($errors)) {
+                return view('auth/login', ['errors' => $errors,'data' => $request]);
+            }else{
+                Auth::login($user);
+                return redirect('dashboard');
+            }
+
+        }
+
+        return redirect('dashboard');
     }
 
     /**
@@ -65,20 +127,65 @@ class AuthController
 
         if (!isset($request['email']) || !$request['email']) {
             $errors['email'] = 'Email is required.';
+        } elseif (filter_var($request['email'], FILTER_VALIDATE_EMAIL)) {
+            $userModel = new User();
+            $user = $userModel->getUserByEmail($request['email']);
+            if ($user) {
+                $errors['email'] = 'Email already exists.';
+            }
+        } else {
+            $errors['email'] = 'Please provide a valid email.';
         }
 
         if (!isset($request['password']) || !$request['password']) {
             $errors['password'] = 'Password is required';
-        } elseif (!isset($request['password_confirmation']) || $request['password'] != $request['password_confirmation']){
-            $errors['password'] = 'Passwords does not mutch.';
+        } else {
+            if(!preg_match('/^(?=.{8,16}$)(?=.*[0-9])(?=.*[a-zA-Z])[a-zA-Z0-9]+$/',$request['password'])){
+                $errors['password'] = 'Passwords must contein at least one letter and one number, length must be form 8 to 16.';
+            }
+            elseif(!isset($request['password_confirmation']) || $request['password'] != $request['password_confirmation']) {
+                $errors['password'] = 'Passwords does not mutch.';
+            }
         }
 
         if (!isset($request['password_confirmation']) || !$request['password_confirmation']) {
             $errors['password_confirmation'] = 'Confirm password is required';
         }
 
-        //todo contine validation
         return $errors;
+    }
+
+    /**
+     * validate request data
+     *
+     * @param array $request
+     * @return array
+     */
+    private function validateLoginInput($request)
+    {
+        $errors = [];
+
+        if (!isset($request['email']) || !$request['email']) {
+            $errors['email'] = 'Email is required.';
+        } elseif (!filter_var($request['email'], FILTER_VALIDATE_EMAIL)) {
+            $errors['email'] = 'Please provide a valid email.';
+        }
+
+        if (!isset($request['password']) || !$request['password']) {
+            $errors['password'] = 'Password is required';
+        }
+
+        return $errors;
+    }
+
+    public function generateAndDeliverEmail($email)
+    {
+        $token = generate_token();
+        $url = url('activate/' . $token);
+        //todo mail send
+
+        $userModel = new User();
+        $userModel->updateToken($email,$token);
     }
 
 }
