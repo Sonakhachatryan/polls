@@ -46,5 +46,6 @@
 
     function csrf_token()
     {
-        return $_SESSION['token'];
+        $_SESSION['csrf_token'] = generate_token();
+        return $_SESSION['csrf_token'];
     }

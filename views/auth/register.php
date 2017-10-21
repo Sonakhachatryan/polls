@@ -12,12 +12,12 @@
                 <form method="post" action="<?= url('register') ?>">
                     <div class="form-group <?= isset($errors['name']) ? 'has-error' : '' ?> ">
                         <label for="name">Name</label>
-                        <input  name="name" type="name" class="form-control" id="name" placeholder="Enter name" value="<?= isset($data['name']) ? $data['name'] : '' ?>">
+                        <input  name="name" type="name" class="form-control" id="name" placeholder="Enter name" value="<?= isset($data['name']) ? htmlentities($data['name']) : '' ?>">
                         <?= isset($errors['name']) ? '<small class="form-text text-muted"> ' . $errors['name'] . '</small>' : '' ?>
                     </div>
                     <div class="form-group <?= isset($errors['email']) ? 'has-error' : '' ?> ">
                         <label for="email">Email</label>
-                        <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="<?= isset($data['email']) ? $data['email'] : '' ?>">
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="<?= isset($data['email']) ? html($data['email']) : '' ?>">
                         <?= isset($errors['email']) ? '<small class="form-text text-muted"> ' . $errors['email'] . '</small>' : '' ?>
                     </div>
                     <div class="form-group <?= isset($errors['password']) ? 'has-error' : '' ?>">
@@ -30,7 +30,7 @@
                         <input name="password_confirmation" type="password" class="form-control" id="password_confirmation" placeholder="Confirm Password">
                         <?= isset($errors['password_confirmation']) ? '<small class="form-text text-muted"> ' . $errors['password_confirmation'] . '</small>' : '' ?>
                     </div>
-                    <input type="hidden" name="token" value="<?= csrf_token() ?>">
+                    <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
             </div>

@@ -237,6 +237,24 @@ class Poll extends DB
         return $sth->execute();
     }
 
+    /**
+     * vote for answer
+     *
+     * @param $answerId
+     */
+    public function voteForAnswer($answerId,$pollId)
+    {
+        $sql = 'UPDATE answers SET choosen = choosen + 1 WHERE `id` = :id';
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $answerId, PDO::PARAM_INT);
+        $sth->execute();
+
+        $sql = "UPDATE $this->tableName SET total_answered = total_answered + 1 WHERE `id` = :id";
+        $sth = $this->dbh->prepare($sql);
+        $sth->bindParam(':id', $pollId, PDO::PARAM_INT);
+        $sth->execute();
+    }
+
 
 
 }

@@ -3,3 +3,7 @@
     margin: 0 auto;
     padding-top: 50px;
 }
+
+.for-vote,.vote-result{
+    margin: 10px
+}

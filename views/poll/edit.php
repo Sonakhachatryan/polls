@@ -20,12 +20,12 @@
                 <div class="form-group <?= isset($errors['title']) ? 'has-error' : '' ?> ">
                     <label for="title">Title</label>
                     <input name="title" type="text" class="form-control" id="title" placeholder="Enter title"
-                           value="<?= $poll['title'] ?>">
+                           value="<?= htmlentities($poll['title']) ?>">
                     <?= isset($errors['title']) ? '<small class="form-text text-muted"> ' . $errors['title'] . '</small>' : '' ?>
                 </div>
                 <div class="form-group <?= isset($errors['question']) ? 'has-error' : '' ?> ">
                     <label for="question">Question</label>
-                    <input name="question" type="text" class="form-control" id="question" placeholder="Enter question" value="<?= $poll['question'] ?>">
+                    <input name="question" type="text" class="form-control" id="question" placeholder="Enter question" value="<?= htmlentities($poll['question']) ?>">
                     <?= isset($errors['question']) ? '<small class="form-text text-muted"> ' . $errors['question'] . '</small>' : '' ?>
                 </div>
                 <div class="form-group <?= isset($errors['answers']) ? 'has-error' : '' ?> ">
@@ -37,7 +37,7 @@
                             class="glyphicon glyphicon-plus"></span></button>
                     <?= isset($errors['answers']) ? '<small class="form-text text-muted"> ' . $errors['answers'] . '</small>' : '' ?>
                 </div>
-                <input type="hidden" name="token" value="<?= csrf_token() ?>">
+                <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 <button type="submit" class="btn btn-primary">Update</button>
             </form>
             <hr>
@@ -55,7 +55,7 @@
                 foreach($poll['answers'] as $key => $answer){?>
                     <tr>
                         <th scope="row"><?= $key +1 ?></th>
-                        <td><?= $answer['label'] ?></td>
+                        <td><?= htmlentities($answer['label']) ?></td>
                         <td><a href="<?= isset($admin) ? url('admin/answer/remove?id=' . $answer['id']) : url('answer/remove?id=' . $answer['id']) ?>"><span class="glyphicon glyphicon-trash"></span></a></td>
                     </tr>
                 <?php }; ?>

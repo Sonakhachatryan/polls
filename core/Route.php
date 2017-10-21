@@ -21,10 +21,6 @@ class Route{
     }
 
     public static function get($url, $action){
-//
-//        if(isset($_GET['token']) && $_GET['token'] != $_SESSION['old_token'] ) {
-//            throw new \Exception('Token missmutch');
-//        }
         if($_SERVER['REQUEST_METHOD'] != 'GET')
             return;
 
@@ -34,13 +30,13 @@ class Route{
     }
 
     public static function post($url, $action){
-//
-//        if($_POST['token'] != $_SESSION['old_token'] ) {
-//            throw new \Exception('Token missmutch');
-//        }
 
         if($_SERVER['REQUEST_METHOD'] != 'POST')
             return;
+
+        if(!isset($_SESSION['csrf_token']) || ($_POST['csrf_token'] != $_SESSION['csrf_token']) ) {
+            throw new \Exception('Token mismatch');
+        }
 
         if(! self::compareUrl($url, $action)){
             return;

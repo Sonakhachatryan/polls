@@ -16,12 +16,13 @@
                 <div class="form-group <?= isset($errors['title']) ? 'has-error' : '' ?> ">
                     <label for="title">Title</label>
                     <input name="title" type="text" class="form-control" id="title" placeholder="Enter title"
-                           value="<?= isset($data['title']) ? $data['title'] : '' ?>">
+                           value="<?= isset($data['title']) ? htmlentities($data['title']) : '' ?>">
                     <?= isset($errors['title']) ? '<small class="form-text text-muted"> ' . $errors['title'] . '</small>' : '' ?>
                 </div>
                 <div class="form-group <?= isset($errors['question']) ? 'has-error' : '' ?> ">
                     <label for="question">Question</label>
-                    <input name="question" type="text" class="form-control" id="question" placeholder="Enter question">
+                    <input name="question" type="text" class="form-control" id="question" placeholder="Enter question"
+                           value="<?= isset($data['title']) ? htmlentities($data['question']) : '' ?>">
                     <?= isset($errors['question']) ? '<small class="form-text text-muted"> ' . $errors['question'] . '</small>' : '' ?>
                 </div>
                 <div class="form-group <?= isset($errors['answers']) ? 'has-error' : '' ?> ">
@@ -41,7 +42,7 @@
                                 class="glyphicon glyphicon-plus"></span></button>
                     <?= isset($errors['answers']) ? '<small class="form-text text-muted"> ' . $errors['answers'] . '</small>' : '' ?>
                 </div>
-                <input type="hidden" name="token" value="<?= csrf_token() ?>">
+                <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                 <button type="submit" class="btn btn-primary">Create</button>
             </form>
         </div>

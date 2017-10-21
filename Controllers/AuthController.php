@@ -178,14 +178,43 @@ class AuthController
         return $errors;
     }
 
+    /**
+     * send activation mail to user
+     *
+     * @param $email
+     */
     public function generateAndDeliverEmail($email)
     {
         $token = generate_token();
         $url = url('activate/' . $token);
-        //todo mail send
+
+        $to      = $email;
+        $subject = 'Activation';
+        $message = '<p>Please click <a href="' . $url .'">here</a> to activate your account</p>';
+        $headers = 'From: sona.khachtrayn1995@gmail.com';
+
+        mail($to, $subject, $message, $headers);
 
         $userModel = new User();
         $userModel->updateToken($email,$token);
+    }
+
+    /**
+     * activate and login user
+     *
+     * @param $token
+     * @return mixed
+     */
+    public function activate($token)
+    {
+        $userModel = new User();
+        $user = $userModel->updateStatus($token);
+
+        if($user) {
+            Auth::login($user);
+        }
+        return redirect('dashboard');
+
     }
 
 }
