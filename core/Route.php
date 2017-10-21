@@ -43,7 +43,7 @@ class Route{
         }
     }
 
-    public function compareUrl($url, $action){
+    public static function compareUrl($url, $action){
         $current_url = $_SERVER['REQUEST_URI'];
 
         if($url[0] == '/'){

@@ -7,3 +7,82 @@
 .for-vote,.vote-result{
     margin: 10px
 }
+
+.home{
+    width: 100%;
+    height: auto;
+    background-image: url("../images/unnamed.jpg");
+}
+
+/* home page */
+
+.tm-section-intro {
+    background-image: url(../images/ocean-bg.jpg);
+    background-attachment: fixed;
+    background-position: center top;
+    background-repeat: no-repeat;
+    background-size: 100% 800px;
+    color: white;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    text-align: center;
+    height: 800px;
+}
+
+.tm-wrapper-center {
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    -ms-flex-pack: center;
+    justify-content: center;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+}
+
+/* IE bug fix */
+.tm-wrapper-center > * {
+    -ms-flex: 0 1 auto;
+    -webkit-flex: 0 1 auto;
+    flex: 0 1 auto;
+}
+
+.tm-section-intro-title {
+    font-size: 4.5rem;
+    margin-bottom: 3.5rem;
+}
+
+.tm-section-intro-text {
+    font-size: 2rem;
+    margin-bottom: 4rem;
+    width: 100%;
+}
+
+.tm-btn-white-big {
+    font-size: 2.4rem;
+    color: #a1c7f1;
+    background-color: white;
+    padding: 0.75rem 2.5rem;
+    border-radius: 0.5rem;
+}
+
+.tm-btn-white-big:hover,
+.tm-btn-white-big:focus {
+    color: white;
+    background-color: #A2D1FF;
+}
+
+.mt20{
+    margin-top: 20px;
+}

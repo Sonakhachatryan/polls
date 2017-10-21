@@ -186,12 +186,12 @@ class AuthController
     public function generateAndDeliverEmail($email)
     {
         $token = generate_token();
-        $url = url('activate/' . $token);
+        $url = url('activate?token=' . $token);
 
         $to      = $email;
         $subject = 'Activation';
         $message = '<p>Please click <a href="' . $url .'">here</a> to activate your account</p>';
-        $headers = 'From: sona.khachtrayn1995@gmail.com';
+        $headers = 'From: sona.khachatryan1995@gmail.com; Content-Type: text/html;';
 
         mail($to, $subject, $message, $headers);
 

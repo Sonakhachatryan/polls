@@ -14,7 +14,7 @@
     {
         $base = Core\Config::get('baseUrl');
 
-        return $base . '/' . $url;
+        return $base . $url;
     }
 
     function dd()
@@ -46,6 +46,6 @@
 
     function csrf_token()
     {
-        $_SESSION['csrf_token'] = generate_token();
-        return $_SESSION['csrf_token'];
+        $_SESSION['stoken'] = generate_token();
+        return $_SESSION['token'];
     }

@@ -14,7 +14,7 @@ class Config
             'user' => 'root',
             'password' => ''
         ],
-        'baseUrl' => 'http://aod.dev'
+        'baseUrl' => 'http://aod.dev/'
     ];
 
     public static function get($key)

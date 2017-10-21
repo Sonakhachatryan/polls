@@ -17,7 +17,7 @@
                     </div>
                     <div class="form-group <?= isset($errors['email']) ? 'has-error' : '' ?> ">
                         <label for="email">Email</label>
-                        <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="<?= isset($data['email']) ? html($data['email']) : '' ?>">
+                        <input name="email" type="email" class="form-control" id="email" placeholder="Enter email" value="<?= isset($data['email']) ? htmlentities($data['email']) : '' ?>">
                         <?= isset($errors['email']) ? '<small class="form-text text-muted"> ' . $errors['email'] . '</small>' : '' ?>
                     </div>
                     <div class="form-group <?= isset($errors['password']) ? 'has-error' : '' ?>">
@@ -32,6 +32,7 @@
                     </div>
                     <input type="hidden" name="csrf_token" value="<?= csrf_token() ?>">
                     <button type="submit" class="btn btn-primary">Register</button>
+                    <div class="pull-right">Already have an account?<a href="<?= url('login')?>">Login</a></div>
                 </form>
             </div>
         </div>
